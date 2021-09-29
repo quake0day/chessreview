@@ -1,0 +1,32 @@
+.dgame-title{
+    background-color: black;
+    color: white;
+    text-align: center;
+    font-weight: bolder;
+
+}
+.result-alg-ver{
+    display: none;
+}
+
+.dgame.with-next-move.best-move{
+    display: none;
+}
+div span.mf-text{
+    background-color: black;
+    color: white;
+    padding:2px;
+    margin:20px;
+    text-transform: capitalize;
+}
+
+li .mf-path
+{
+    font-size: small;
+}
+.dgame.dcpath-intro{
+    color: tomato;
+}
+div span.path.dgame-best-play{
+    color:tomato;
+}

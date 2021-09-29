@@ -1,0 +1,53 @@
+[Event "Live Chess"]
+[Site "Chess.com"]
+[Date "2021.01.11"]
+[Round "?"]
+[White "JoyDivision1967"]
+[Black "quake0day"]
+[Result "1/2-1/2"]
+[ECO "C00"]
+[WhiteElo "1062"]
+[BlackElo "1004"]
+[TimeControl "1800"]
+[EndTime "14:04:40 PST"]
+[Termination "Game drawn by insufficient material"]
+
+1. e4 {[%timestamp 88]} 1... e6 {[%timestamp 8]} 2. Nc3 {[%timestamp 363]} 2...
+Nf6 {[%timestamp 60]} 3. Bc4 {[%timestamp 89]} 3... d5 {[%timestamp 192]} 4.
+exd5 {[%timestamp 186]} 4... exd5 {[%timestamp 21]} 5. Bb3 {[%timestamp 184]}
+5... d4 {[%timestamp 81]} 6. Nb5 {[%timestamp 369]} 6... Nc6 {[%timestamp 264]}
+7. d3 {[%timestamp 66]} 7... Bb4+ {[%timestamp 255]} 8. Bd2 {[%timestamp 173]}
+8... Bxd2+ {[%timestamp 22]} 9. Qxd2 {[%timestamp 52]} 9... Qe7+ {[%timestamp
+26]} 10. Ne2 {[%timestamp 84]} 10... O-O {[%timestamp 674]} 11. O-O-O
+{[%timestamp 302]} 11... Be6 {[%timestamp 685]} 12. Nexd4 {[%timestamp 191]}
+12... Nxd4 {[%timestamp 122]} 13. Nxd4 {[%timestamp 76]} 13... Bxb3 {[%timestamp
+29]} 14. Nxb3 {[%timestamp 272]} 14... Rfd8 {[%timestamp 339]} 15. Rde1
+{[%timestamp 239]} 15... Qd6 {[%timestamp 643]} 16. f3 {[%timestamp 245]} 16...
+Re8 {[%timestamp 45]} 17. Re2 {[%timestamp 411]} 17... Rxe2 {[%timestamp 101]}
+18. Qxe2 {[%timestamp 36]} 18... Re8 {[%timestamp 20]} 19. Qd2 {[%timestamp
+336]} 19... b6 {[%timestamp 252]} 20. c4 {[%timestamp 591]} 20... c5
+{[%timestamp 221]} 21. a4 {[%timestamp 316]} 21... a5 {[%timestamp 158]} 22. Kc2
+{[%timestamp 793]} 22... Nd7 {[%timestamp 538]} 23. g3 {[%timestamp 195]} 23...
+Nb8 {[%timestamp 92]} 24. Re1 {[%timestamp 134]} 24... Re7 {[%timestamp 148]}
+25. Rxe7 {[%timestamp 441]} 25... Qxe7 {[%timestamp 19]} 26. Qf4 {[%timestamp
+401]} 26... Nc6 {[%timestamp 191]} 27. Kd2 {[%timestamp 380]} 27... Qe5
+{[%timestamp 737]} 28. Qxe5 {[%timestamp 499]} 28... Nxe5 {[%timestamp 25]} 29.
+f4 {[%timestamp 19]} 29... Nf3+ {[%timestamp 22]} 30. Ke3 {[%timestamp 30]}
+30... Nxh2 {[%timestamp 8]} 31. Nd2 {[%timestamp 294]} 31... Ng4+ {[%timestamp
+59]} 32. Ke4 {[%timestamp 83]} 32... Nf2+ {[%timestamp 110]} 33. Kd5
+{[%timestamp 24]} 33... Nxd3 {[%timestamp 26]} 34. Kc6 {[%timestamp 49]} 34...
+Nxb2 {[%timestamp 40]} 35. Kxb6 {[%timestamp 42]} 35... Nxa4+ {[%timestamp 16]}
+36. Kxa5 {[%timestamp 34]} 36... Nb2 {[%timestamp 121]} 37. Kb5 {[%timestamp
+25]} 37... Nd3 {[%timestamp 13]} 38. Kc6 {[%timestamp 117]} 38... f6
+{[%timestamp 596]} 39. Kd5 {[%timestamp 143]} 39... g5 {[%timestamp 861]} 40.
+Nb3 {[%timestamp 123]} 40... gxf4 {[%timestamp 317]} 41. gxf4 {[%timestamp 83]}
+41... Nxf4+ {[%timestamp 35]} 42. Kxc5 {[%timestamp 31]} 42... h5 {[%timestamp
+92]} 43. Nd4 {[%timestamp 70]} 43... h4 {[%timestamp 482]} 44. Nf3 {[%timestamp
+218]} 44... h3 {[%timestamp 748]} 45. Kd6 {[%timestamp 120]} 45... Kg7
+{[%timestamp 21]} 46. c5 {[%timestamp 47]} 46... Kf7 {[%timestamp 1208]} 47. c6
+{[%timestamp 27]} 47... Ne6 {[%timestamp 199]} 48. c7 {[%timestamp 190]} 48...
+Nxc7 {[%timestamp 28]} 49. Kxc7 {[%timestamp 12]} 49... f5 {[%timestamp 22]} 50.
+Kd6 {[%timestamp 23]} 50... Kf6 {[%timestamp 34]} 51. Kd5 {[%timestamp 153]}
+51... Kg6 {[%timestamp 1281]} 52. Ke5 {[%timestamp 202]} 52... Kh5 {[%timestamp
+908]} 53. Kxf5 {[%timestamp 89]} 53... h2 {[%timestamp 112]} 54. Nxh2
+{[%timestamp 30]} 1/2-1/2

@@ -1,0 +1,266 @@
+
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=0.8">
+
+  <title>Chess Review System Alpha 0.1 @ developed by quake0day</title>
+  <link rel="stylesheet" href=  {{ url_for('static', filename='css/style.css') }} >
+
+  <link rel="stylesheet" href=  {{ url_for('static', filename='css/chessboard-1.0.0.css') }} >
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+  <style type="text/css">
+.highlight-white {
+  box-shadow: inset 0 0 3px 3px yellow;
+}
+.highlight-black {
+  box-shadow: inset 0 0 3px 3px blue;
+}
+
+#myBoard{
+  touch-action: none;
+}
+</style>
+</head>
+<body>
+
+
+<!--- Begin Example HTML ------------------------------------------------------>
+<div class="row">
+  <div class="col-lg-3  col-md-2">
+  </div>
+<div class="col-lg-6 col-md-8 col-sm-12">
+
+ <div id="myBoard" style="width: 95%"></div>
+  <span class="badge rounded-pill bg-warning text-dark"><div id="status"></div></span>
+
+</div>
+</div>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+    </div>
+
+  </div>
+    <div class="row">
+      <div id="correct" class="alert alert-success" role="alert" style="display: none">
+        Correct!!
+      </div>
+      <div id="wrong" class="alert alert-warning" role="alert" style="display: none">
+        Try again...
+      </div>
+      <div class="btn-group btn-group-lg" role="group" aria-label="Basic example">
+        <button type="button" id="first" class="btn btn-outline-info">First</button>
+        <button type="button" id="last" class="btn btn-outline-info">Last</button>
+
+        <button type="button" id="prev" class="btn btn-primary btn-warning">Prev</button>
+<button type="button" id="move1Btn" class="btn btn-primary btn-success">Answer</button>
+<button type="button" id="reset" class="btn btn-primary btn-danger">Reset</button>
+<button type="button" id="next" class="btn btn-primary btn-warning">Next</button>
+
+</div>
+
+
+
+  </div>
+    <div class="row">
+
+
+
+<div class="card" style="width: 100%;">
+  <div class="card-body">
+    <div class="demo-container">
+    </div>
+  </div>
+</div>
+      <div class="card" style="width: 100%">
+        <div class="card-body">
+          <h5 class="card-title">Game Info</h5>
+          <p class="card-text">  <ul>
+          <li>FEN: {{fen}}</li>
+          <li>Site: {{site}}</li>
+          <li>Date: {{date}}</li>
+          <li>White Player: {{white_player}}</li>
+          <li>Black Player: {{black_player}}</li>
+
+        </ul></p>
+
+        </div>
+      </div>
+
+      </div>
+</div>
+
+
+
+<!--- End Example HTML -------------------------------------------------------->
+<script src= {{ url_for('static', filename='js/jquery-3.4.1.min.js') }} ></script>
+
+<script src= {{ url_for('static', filename='js/chessboard-1.0.0.js') }} ></script>
+<script src= {{ url_for('static', filename='js/chess.js') }} ></script>
+
+<script>
+
+// --- Begin Example JS --------------------------------------------------------
+var fen = "{{ fen }}"
+var board = null
+var $board = $('#myBoard')
+var squareToHighlight = null
+var colorToHighlight = null
+var game = new Chess(fen)
+var $status = $('#status')
+var $fen = $('#fen')
+var $pgn = $('#pgn')
+
+function onDragStart (source, piece, position, orientation) {
+  // do not pick up pieces if the game is over
+  if (game.game_over()) return false
+
+  // only pick up pieces for the side to move
+  if ((game.turn() === 'w' && piece.search(/^b/) !== -1) ||
+          (game.turn() === 'b' && piece.search(/^w/) !== -1)) {
+    return false
+  }
+}
+
+function onDrop (source, target) {
+  // see if the move is legal
+  var move = game.move({
+    from: source,
+    to: target,
+    promotion: 'q' // NOTE: always promote to a queen for example simplicity
+  })
+
+  // illegal move
+  if (move === null) return 'snapback'
+
+  updateStatus()
+}
+
+// update the board position after the piece snap
+// for castling, en passant, pawn promotion
+function onSnapEnd () {
+  board.position(game.fen())
+
+}
+
+function updateStatus () {
+  var status = ''
+
+  var moveColor = 'White'
+  if (game.turn() === 'b') {
+    moveColor = 'Black'
+  }
+
+  // checkmate?
+  if (game.in_checkmate()) {
+    status = 'Game over, ' + moveColor + ' is in checkmate.'
+  }
+
+  // draw?
+  else if (game.in_draw()) {
+    status = 'Game over, drawn position'
+  }
+
+  // game still on
+  else {
+    status = moveColor + ' to move'
+
+    // check?
+    if (game.in_check()) {
+      status += ', ' + moveColor + ' is in check'
+    }
+  }
+  console.log(status)
+  console.log("FEN:" + game.fen())
+  if(game.fen() == "{{final_fen}}"){
+    console.log("Correct!!");
+    $("#correct").show();
+  }
+  if(game.fen() != "{{final_fen}}"){
+    $("#correct").hide();
+  }
+  $status.html(status)
+  $fen.html(game.fen())
+  $pgn.html(game.pgn())
+}
+
+function onDragMove (newLocation, oldLocation, source,
+                     piece, position, orientation) {
+  console.log('New location: ' + newLocation)
+  console.log('Old location: ' + oldLocation)
+  console.log('Source: ' + source)
+  console.log('Piece: ' + piece)
+  console.log('Position: ' + Chessboard.objToFen(position))
+  console.log('Orientation: ' + orientation)
+  console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+}
+
+function onMoveEnd (oldPos, newPos) {
+  console.log('Move animation complete:')
+  console.log('Old position: ' + Chessboard.objToFen(oldPos))
+  console.log('New position: ' + Chessboard.objToFen(newPos))
+  console.log('++++++++++++++++++++++')
+    $board.find('.square-' + squareToHighlight)
+    .addClass('highlight-' + colorToHighlight)
+}
+
+var config = {
+  orientation: '{{orientation}}',
+  draggable: true,
+  position: fen,
+  onDragMove: onDragMove,
+  sparePieces: false,
+  onMoveEnd: onMoveEnd,
+  onDragStart: onDragStart,
+  onDrop: onDrop,
+  onSnapEnd: onSnapEnd
+}
+
+
+var board = Chessboard('myBoard', config)
+
+function htmlDecode(value){
+	return $('<div/>').html(value).text();
+}
+
+$('#move1Btn').on('click', function () {
+  game.move('{{ best_move }}');
+  board.move('{{ best_move }}');
+  var decodedText = htmlDecode("{{reasons}}");
+  $( "div.demo-container" )
+  .html(decodedText);
+  updateStatus ();
+})
+
+$('#reset').on('click', function () {
+  board.position(fen);
+  game.load("{{ fen }}");
+  updateStatus ();
+})
+
+$('#prev').on('click', function () {
+  document.location.href = "{{id - 1}}";
+})
+
+$('#next').on('click', function () {
+  document.location.href = "{{id + 1}}";
+})
+$('#first').on('click', function () {
+  document.location.href = "{{1}}";
+})
+
+$('#last').on('click', function () {
+  document.location.href = "{{total}}";
+})
+updateStatus()
+
+// --- End Example JS ----------------------------------------------------------
+</script>
+</body>
+</html>

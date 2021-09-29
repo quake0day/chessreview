@@ -1,0 +1,27 @@
+[Event "Live Chess"]
+[Site "Chess.com"]
+[Date "2021.01.13"]
+[Round "?"]
+[White "quake0day"]
+[Black "Tetoterompe"]
+[Result "1-0"]
+[ECO "D00"]
+[WhiteElo "1011"]
+[BlackElo "951"]
+[TimeControl "1800"]
+[EndTime "17:09:47 PST"]
+[Termination "quake0day won by resignation"]
+
+1. Nc3 {[%timestamp 5]} 1... d5 {[%timestamp 20]} 2. d4 {[%timestamp 15]} 2...
+e6 {[%timestamp 109]} 3. e4 {[%timestamp 35]} 3... dxe4 {[%timestamp 53]} 4.
+Nxe4 {[%timestamp 11]} 4... f5 {[%timestamp 37]} 5. Nd2 {[%timestamp 102]} 5...
+Qxd4 {[%timestamp 53]} 6. c3 {[%timestamp 76]} 6... Qe5+ {[%timestamp 65]} 7.
+Be2 {[%timestamp 66]} 7... Bc5 {[%timestamp 202]} 8. Ngf3 {[%timestamp 139]}
+8... Qd6 {[%timestamp 347]} 9. O-O {[%timestamp 133]} 9... Qb6 {[%timestamp 82]}
+10. Nd4 {[%timestamp 619]} 10... e5 {[%timestamp 138]} 11. Bb5+ {[%timestamp
+264]} 11... c6 {[%timestamp 78]} 12. Bc4 {[%timestamp 563]} 12... exd4
+{[%timestamp 165]} 13. Re1+ {[%timestamp 28]} 13... Ne7 {[%timestamp 47]} 14.
+Qe2 {[%timestamp 151]} 14... dxc3 {[%timestamp 350]} 15. bxc3 {[%timestamp
+1853]} 15... h5 {[%timestamp 255]} 16. Rb1 {[%timestamp 240]} 16... Qa5
+{[%timestamp 167]} 17. Nb3 {[%timestamp 628]} 17... Qxa2 {[%timestamp 393]} 18.
+Nxc5 {[%timestamp 46]} 1-0
