@@ -14,11 +14,12 @@ import sqlite3
 from sqlite3 import Error
 
 #USERNAME= ""
-DATABASE = "./database.db"
+DATABASE = "database.db"
 STOCK_FISH = "/usr/bin/stockfish"
 THREADS = 128
 #PGNNAME = "quake0day_2021-09-21_bullet_blitz_rapid.pgn"
-PGNNAME = "EricHe1222_2021-09-14_bullet_blitz_rapid.pgn"
+#PGNNAME = "EricHe1222_2021-09-14_bullet_blitz_rapid.pgn"
+PGNNAME = sys.argv[1]
 USERNAME = PGNNAME.split("_")[0]
 
 

@@ -11,6 +11,7 @@ from datetime import datetime
 import json
 import urllib.request
 import os
+import sys
 
 def CheckFileName(file_name):
     """
@@ -41,7 +42,10 @@ def initScrape():
     This functions is used to set up the scraping parameters like account name and game type.
     """
     # Input account name
-    acc_name = input("Enter account name: ").strip()
+    #acc_name = input("Enter account name: ").strip()
+
+    #Automatically get the user name that is passed in by the Flask server
+    acc_name = sys.argv[1]
 
     # Check if acc_name is empty
     if bool(acc_name) == False:
@@ -131,7 +135,7 @@ def beginScrape(params):
     date = now.strftime("%Y-%m-%d")
     game_type_string = "_".join(game_type)
     file_name = f"{acc_name}_{date}_{game_type_string}.pgn"
-
+    #file_name = "chessreview/" + file_name
     # Check if file already exists
     CheckFileName(file_name)
 
@@ -147,14 +151,15 @@ def beginScrape(params):
                         with open(file_name, "a") as text_file:
                             print(game["pgn"], file=text_file)
                             print("\n", file=text_file)
-
+    return file_name
 
 def main():
     """
     Scrape PGN files from chess.com .
     """
     params = initScrape()
-    beginScrape(params)
+    output = beginScrape(params)
+    print(output)
 
 if __name__ == '__main__':
     main()

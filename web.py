@@ -2,6 +2,7 @@ from flask import Flask
 import sqlite3
 from flask import g
 from flask import render_template
+#DATABASE = './chessreview/database.db'
 DATABASE = './database.db'
 #DATABASE = '/var/www/chess/chessChen/database.db'
 
