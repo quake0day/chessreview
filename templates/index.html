@@ -19,15 +19,46 @@
 .highlight-black {
   box-shadow: inset 0 0 3px 3px blue;
 }
+#processingStatus {
+   text-align:center;
+   margin: 0 auto;
+   width:70%;
+   display:none;
+   margin-top:33vh;
+}
 
 #myBoard{
   touch-action: none;
 }
 </style>
+<script>
+    function showProcessingStatus()
+    {
+       var allElements = document.querySelectorAll("div, p, span, h1");
+       var isProcessingStatusField = document.getElementById("processingStatus");
+        var isProcessing = {% if isProcessing %} 
+                 true
+              {% else %} 
+                 false {% endif %};
+            if (isProcessing) {
+                   for(i=0; i<allElements.length; i++)
+                   {
+                        if(allElements[i] != isProcessingStatusField)
+                        {
+                           allElements[i].style.display = "none";
+                        }
+                   }
+
+                   isProcessingStatusField.style.display = "block";
+                   isProcessingStatusField.innerHTML = "The current user's games are still being analyzed. Please check back later.";
+            }
+
+       
+    }
+</script>
 </head>
-<body>
-
-
+<body onload="showProcessingStatus()">
+<h1 class="alert alert-warning" id="processingStatus"></h1>
 <!--- Begin Example HTML ------------------------------------------------------>
 <div class="row">
   <div class="col-lg-3  col-md-2">

@@ -1,0 +1,72 @@
+<html>
+
+<head>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+		integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<script type="text/javascript">
+		
+		function pgnFilePythonRequest() {
+			var requestStatusElement = document.getElementById("requestStatus");
+
+			//Post username to Flask server using AJAX, with the username formatted as JSON
+			var usernameValue = document.getElementById("usernameInput").value;
+			var myData = { username: usernameValue };
+			myData = JSON.stringify(myData);
+			requestStatusElement.innerHTML = "Loading...";
+			$.ajax({
+				url: "http://127.0.0.1:5000",
+				type: "POST",
+				data: myData,
+				contentType: "application/json",
+				dataType: "text",
+				error: function (xhr, statusText, errorThrown) {
+
+					requestStatusElement.innerHTML = errorThrown;
+				}
+			}).done(function (data) {
+				if(!data.includes("Error"))
+				{
+					pgnAnalysisRequest(data);
+				}
+				else
+				{
+					requestStatusElement.innerHTML = data;
+				}
+			});
+
+		}
+
+		function pgnAnalysisRequest(pgnFileName) {
+			var requestStatusElement = document.getElementById("requestStatus");
+			//Post username to Flask server using AJAX, with the username formatted as JSON
+			var myData = { pgnFile: pgnFileName };
+			myData = JSON.stringify(myData);
+			requestStatusElement.innerHTML += "\n" + "Analyzing pgn file " + pgnFileName + "...";
+			$.ajax({
+				url: "http://127.0.0.1:5000/analyze",
+				type: "POST",
+				data: myData,
+				contentType: "application/json",
+				dataType: "text",
+				error: function (xhr, statusText, errorThrown) {
+
+					requestStatusElement.innerHTML = errorThrown;
+				}
+			}).done(function (data) {
+				requestStatusElement.innerHTML = data;
+			});
+
+		}
+	</script>
+</head>
+
+<body>
+	<label for="usernameInput">Username:</label>
+	<input id="usernameInput" name="usernameInput"></input>
+	<button onclick="pgnFilePythonRequest()">Click to send username <br> to Python function</button>
+	<div id="requestStatus"></div>
+</body>
+
+</html>

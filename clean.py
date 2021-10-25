@@ -2,7 +2,8 @@ from db import create_connection, update_best_move
 from bs4 import BeautifulSoup
 
 # connect database
-database = "./chessreview/database.db"
+#database = "./chessreview/database.db"
+database = "./database.db"
 
 # create a database connection
 conn = create_connection(database)

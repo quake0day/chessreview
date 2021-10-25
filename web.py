@@ -1,9 +1,17 @@
 from flask import Flask
 import sqlite3
 from flask import g
-from flask import render_template
+from flask import render_template, request
+from flask_cors import CORS, cross_origin
+from sqlite3 import Error
+import json
+import subprocess
+import requests
+
 #DATABASE = './chessreview/database.db'
 DATABASE = './database.db'
+processingCheckDb = './analyzed_game_users.db'
+
 #DATABASE = '/var/www/chess/chessChen/database.db'
 
 app = Flask(__name__)
@@ -22,6 +30,43 @@ def create_connection(db_file):
 
     return conn
 
+@app.route('/getIsProcessing/<username>')
+def query_is_processing_status(username):
+    con = sqlite3.connect(processingCheckDb)
+    cur = con.cursor()
+    cur.execute("SELECT isProcessing from users WHERE user=?", (username,))
+    db_result = cur.fetchone()
+    if not db_result is None:
+        return db_result[0]
+    else:
+        return "User not found"
+
+@app.route('/analyze/<username>')
+def analyze_games(username):
+    scraper_output = subprocess.check_output(['python3', 'scraper.py', username])
+    scraper_output = scraper_output.decode("utf-8")
+    if not "Error" in scraper_output:
+        con = sqlite3.connect(processingCheckDb)
+        cur = con.cursor()
+        pgn_file = str(scraper_output.split(".pgn")[0] + ".pgn")
+        print(pgn_file)
+        cur.execute("REPLACE INTO users (user, isProcessing) VALUES (?, 'true')", (username,))
+        con.commit();
+        try:
+           # analysis_process = subprocess.Popen(['python3', 'main.py', pgn_file])
+            analysis_output = subprocess.check_output(['python3', 'main.py', pgn_file]) 
+            cur.execute("REPLACE INTO users (user, isProcessing) VALUES (?, 'false')", (username,))
+            con.commit()
+            con.close()
+            return "Analysis Successful"
+        except subprocess.CalledProcessError as e:
+           cur.execute("REPLACE INTO users (user, isProcessing) VALUES (?, 'false')", (username,))
+           con.commit()
+           con.close()
+           return "Analysis failed: " + str(e)
+    else:
+      return (scraper_output)
+
 @app.route('/<name>')
 @app.route('/<name>/<id>')
 def hello(name="quake0day", id=1):
@@ -35,18 +80,34 @@ def hello(name="quake0day", id=1):
     final_fen = ""
     orientation = "white"
     reasons = ""
-    #username = (name)
+   # username = str(request.path).split("/")[1]
+    username = name
+#    print(username) 
+
+    request_response = requests.get("http://localhost:5000/getIsProcessing/" + name).text
+    if not "User not found" in request_response:
+        isProcessingStatusForUser = request_response
+    else:
+        return render_template('user-not-found.html')
     tester = (name,)
     sql = ''' SELECT * FROM positions WHERE tester = ? ORDER by date DESC
     
                '''
 
     # create a database connection
+
     conn = create_connection(DATABASE)
     cur = conn.cursor()
     cur.execute(sql, tester)
     results = cur.fetchall()
     total = len(results)
+
+    if "true" in isProcessingStatusForUser:
+        isProcessingStatusForUser = True
+    else:
+        isProcessingStatusForUser = False
+ 
+
     try:
         iid = int(id)
     except ValueError:
@@ -75,10 +136,10 @@ def hello(name="quake0day", id=1):
             orientation = "black"
     except:
         pass
-    return render_template('index.html', id = iid, fen=fen, best_move=best_move, orientation=orientation, san = san, site = site, date = date, white_player = white_player, black_player = black_player, reasons= reasons, final_fen=final_fen, total=total)
+    print(isProcessingStatusForUser)
+    return render_template('index.html', isProcessing = isProcessingStatusForUser, id = iid, fen=fen, best_move=best_move, orientation=orientation, san = san, site = site, date = date, white_player = white_player, black_player = black_player, reasons= reasons, final_fen=final_fen, total=total)
 
 
-@app.route('/')
 def hello_world():
     return 'Hello, World!'
 
@@ -103,3 +164,4 @@ def query_db(query, args=(), one=False):
     rv = cur.fetchall()
     cur.close()
     return (rv[0] if rv else None) if one else rv
+
