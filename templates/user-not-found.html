@@ -1,9 +1,25 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <script>
+            function analyzeUserGames(username){
+                //Add analyze ajax call
+                $.get("http://localhost:5000/analyze/" + username, function(data) {
+                    alert("Analyzing games from " + username);
+                })
+                .done(function(){
+                    alert("Analysis complete");
+                })
+                .fail(function()
+                {
+                    alert("Analysis failed");
+                });
+            }
+        </script>
     </head>
     <body>
         <h1>No games for this user have been analyzed yet.</h1>
-        <button>Analyze User Games</button>
+        <button onclick="analyzeUserGames('{{username}}')">Analyze User Games</button>
     </body>
 </html>
